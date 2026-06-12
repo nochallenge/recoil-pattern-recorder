@@ -54,6 +54,14 @@ npm run tauri:build
 > already committed; to change it, drop a square PNG in and run
 > `npx @tauri-apps/cli icon path/to/logo.png`.
 
+> **Distributing the binary?** A locally-built release embeds the
+> builder's Cargo path (e.g. `C:\Users\<you>\.cargo\…`) in dependency
+> panic strings. Strip it by remapping the prefix at build time —
+> PowerShell:
+> `$env:RUSTFLAGS="--remap-path-prefix=$env:USERPROFILE=C:\Users\dev"; npm run tauri:build`
+> (bash: `RUSTFLAGS="--remap-path-prefix=$HOME=/home/dev" npm run tauri:build`).
+> Building in CI avoids it entirely — runner paths carry no personal name.
+
 ---
 
 ## How it works
