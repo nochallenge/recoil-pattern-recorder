@@ -190,11 +190,16 @@ recoil-pattern-recorder/
 │   ├── App.tsx
 │   ├── api.ts                # Tauri command wrappers
 │   ├── types.ts              # TS mirror of Rust types
+│   ├── audio.ts              # WebAudio beeps for recording states
+│   ├── settings.ts           # localStorage defaults + onboarding flag
+│   ├── weapon-presets.ts     # per-game fire rate / mag size presets
 │   ├── styles.css
 │   └── components/
 │       ├── PatternList.tsx
 │       ├── RecordingModal.tsx
-│       └── PatternVisualizer.tsx
+│       ├── PatternVisualizer.tsx
+│       ├── SettingsPanel.tsx   # hotkey rebind + capture diagnostic
+│       └── OnboardingModal.tsx # first-run walkthrough
 ├── src-tauri/
 │   ├── Cargo.toml
 │   ├── Cargo.lock            # committed for reproducible binary builds
@@ -202,17 +207,18 @@ recoil-pattern-recorder/
 │   ├── tauri.conf.json
 │   ├── capabilities/
 │   │   └── default.json      # Tauri 2 core IPC permissions
-│   ├── icons/icon.png
+│   ├── icons/                # app icon set (icon.ico, icon.icns, PNGs)
 │   └── src/
 │       ├── main.rs           # Tauri commands + app setup
 │       ├── pattern.rs        # Pattern data model + tests
-│       ├── input_capture.rs  # rdev global input capture
+│       ├── input_capture.rs  # raw input (Windows) + rdev capture
 │       ├── recorder.rs       # Recording state machine + tests
 │       ├── humanizer.rs      # (unused, kept in tree)
 │       └── device.rs         # (unused, kept in tree)
 ├── patterns/                 # Ignored — user-local .json files
 ├── index.html
 ├── package.json
+├── LICENSE                   # MIT
 ├── tsconfig.json
 └── vite.config.ts
 ```

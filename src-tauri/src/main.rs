@@ -207,8 +207,16 @@ fn save_pattern(state: State<AppState>, pattern: Pattern) -> Result<String, Stri
         .take(19)
         .map(|c| if c == ':' { '-' } else { c })
         .collect();
-    let filename = format!("{}__{}.json", pattern.slug(), stamp);
-    let path = dir.join(&filename);
+    // Same slug + same second would silently overwrite — append a
+    // counter until the name is free.
+    let mut filename = format!("{}__{}.json", pattern.slug(), stamp);
+    let mut path = dir.join(&filename);
+    let mut n = 2;
+    while path.exists() {
+        filename = format!("{}__{}_{}.json", pattern.slug(), stamp, n);
+        path = dir.join(&filename);
+        n += 1;
+    }
 
     let bytes = serde_json::to_vec_pretty(&pattern).map_err(|e| e.to_string())?;
     std::fs::write(&path, bytes).map_err(|e| e.to_string())?;

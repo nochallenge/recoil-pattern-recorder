@@ -172,7 +172,7 @@ export function PatternVisualizer({
                 <Tooltip
                   contentStyle={tooltipStyle}
                   cursor={{ strokeDasharray: "3 3" }}
-                  formatter={(v: number) => v.toFixed(0)}
+                  formatter={(v) => (typeof v === "number" ? v.toFixed(0) : String(v ?? ""))}
                   labelFormatter={() => ""}
                 />
                 <ReferenceLine x={0} stroke="var(--text-faint)" />
