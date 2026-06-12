@@ -11,7 +11,7 @@
 //      `recording_status` while active to update the event counter.
 //
 // Patterns are serialized as JSON in the OS-standard app-data
-// directory (e.g. %APPDATA%/com.recoil-trainer.app/patterns on
+// directory (e.g. %APPDATA%/com.recoil-pattern-recorder.app/patterns on
 // Windows). The directory is logged to stdout on first launch so
 // developers can find their recordings.
 
@@ -82,6 +82,12 @@ fn start_recording(
 ) -> Result<(), String> {
     if name.trim().is_empty() {
         return Err("pattern name required".into());
+    }
+    if reference_sensitivity <= 0.0 {
+        return Err("sensitivity must be greater than 0".into());
+    }
+    if reference_dpi == 0 {
+        return Err("DPI must be greater than 0".into());
     }
     let mut p = Pattern::new(name, game, weapon);
     p.reference_sensitivity = reference_sensitivity;
@@ -262,18 +268,18 @@ fn main() {
                 .map(|d| d.join("patterns"))
                 .unwrap_or_else(|e| {
                     eprintln!(
-                        "recoil-trainer: app_data_dir unavailable ({e}); \
+                        "recoil-pattern-recorder: app_data_dir unavailable ({e}); \
                          falling back to ./patterns"
                     );
                     std::path::PathBuf::from("patterns")
                 });
             if let Err(e) = std::fs::create_dir_all(&patterns_dir) {
                 eprintln!(
-                    "recoil-trainer: could not create patterns dir {}: {e}",
+                    "recoil-pattern-recorder: could not create patterns dir {}: {e}",
                     patterns_dir.display()
                 );
             }
-            println!("recoil-trainer: patterns dir = {}", patterns_dir.display());
+            println!("recoil-pattern-recorder: patterns dir = {}", patterns_dir.display());
 
             let recorder: Arc<Mutex<Option<Recorder>>> = Arc::new(Mutex::new(None));
             let hotkey: Arc<RwLock<String>> = Arc::new(RwLock::new("F8".to_string()));

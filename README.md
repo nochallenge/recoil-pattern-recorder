@@ -1,4 +1,4 @@
-# Recoil Trainer
+# Recoil Pattern Recorder
 
 Desktop app for recording and visualizing FPS recoil control patterns.
 You fire a gun in-game, pull your mouse down to counter the recoil, and
@@ -47,9 +47,12 @@ edits to Rust code trigger a fast rebuild.
 npm run tauri:build
 ```
 
-> Release bundling needs icons. If `tauri build` complains about
-> missing icons, generate them once from a source PNG:
-> `npx @tauri-apps/cli icon path/to/logo.png`
+> This produces platform installers (MSI/NSIS on Windows, `.dmg` on
+> macOS, `.deb`/AppImage on Linux) under
+> `src-tauri/target/release/bundle/`, alongside the bare executable.
+> The bundlers (WiX/NSIS) download on first run. The icon set is
+> already committed; to change it, drop a square PNG in and run
+> `npx @tauri-apps/cli icon path/to/logo.png`.
 
 ---
 
@@ -74,6 +77,19 @@ Each state transition has a distinct beep so you can record without looking at t
 | countdown / armed | cancel |
 | recording | force-stop |
 | done | save |
+
+### Capture method
+
+On **Windows**, mouse movement is read from raw input (`WM_INPUT`),
+which reports the device's relative counts before the OS applies
+pointer ballistics or cursor clamping — so games that lock and recenter
+the cursor every frame don't distort the recorded path.
+
+On **macOS / Linux**, movement is derived from cursor-position deltas
+(via `rdev`). In titles that hold the pointer locked/recentered those
+deltas can be noisy or self-cancel; record on the desktop or in a mode
+without pointer lock there until raw-input backends land for those
+platforms.
 
 Saved patterns live in your OS app-data directory (the exact path is
 shown at the bottom of the sidebar).

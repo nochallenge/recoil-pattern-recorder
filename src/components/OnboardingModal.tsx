@@ -54,7 +54,7 @@ export function OnboardingModal({ onClose }: { onClose: () => void }) {
 
         {step === 0 && (
           <>
-            <h2>Welcome to Recoil Trainer</h2>
+            <h2>Welcome to Recoil Pattern Recorder</h2>
             <p>
               This app records your mouse movement while you counter recoil.
               You see the shape of your spray and whether you got better over

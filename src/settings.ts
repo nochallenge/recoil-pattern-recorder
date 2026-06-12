@@ -3,7 +3,7 @@
 
 import type { NewRecordingInput } from "./types";
 
-const KEY = "recoil-trainer.defaults.v1";
+const KEY = "recoil-pattern-recorder.defaults.v1";
 
 export interface StoredDefaults {
   game: string;
@@ -52,7 +52,7 @@ export function saveDefaults(input: NewRecordingInput) {
   }
 }
 
-const ONBOARDED_KEY = "recoil-trainer.onboarded.v1";
+const ONBOARDED_KEY = "recoil-pattern-recorder.onboarded.v1";
 
 export function hasOnboarded(): boolean {
   try {

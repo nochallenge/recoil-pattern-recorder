@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Default capability for recoil-trainer: core IPC + events only.",
+  "description": "Default capability for recoil-pattern-recorder: core IPC + events only.",
   "windows": ["main"],
   "permissions": [
     "core:default"

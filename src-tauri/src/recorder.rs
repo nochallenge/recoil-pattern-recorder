@@ -95,8 +95,8 @@ mod tests {
     fn press_left(t_us: u64) -> InputEvent {
         InputEvent::ButtonPress { button: "Left".into(), t_us }
     }
-    fn release_left(t_us: u64) -> InputEvent {
-        InputEvent::ButtonRelease { button: "Left".into(), t_us }
+    fn release_left(_t_us: u64) -> InputEvent {
+        InputEvent::ButtonRelease { button: "Left".into() }
     }
     fn mov(dx: f64, dy: f64, t_us: u64) -> InputEvent {
         InputEvent::MouseMove { dx, dy, t_us }

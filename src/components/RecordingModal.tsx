@@ -135,6 +135,11 @@ export function RecordingModal({
   }, [phase]);
 
   async function runCountdown(signal: AbortSignal) {
+    if (form.reference_sensitivity <= 0 || form.reference_dpi <= 0) {
+      setError("In-game sens and DPI must both be greater than 0.");
+      setPhase("form");
+      return;
+    }
     for (let i = 3; i > 0; i--) {
       if (signal.aborted) return;
       setCountdownTick(i);
@@ -185,6 +190,10 @@ export function RecordingModal({
   };
 
   const handleArm = () => {
+    if (form.reference_sensitivity <= 0 || form.reference_dpi <= 0) {
+      setError("In-game sens and DPI must both be greater than 0.");
+      return;
+    }
     setError(null);
     setCountdownTick(3);
     setPhase("countdown");

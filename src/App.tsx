@@ -125,7 +125,7 @@ export default function App() {
       const text = await file.text();
       const parsed = JSON.parse(text) as Pattern;
       if (typeof parsed.schema_version !== "number" || !Array.isArray(parsed.events)) {
-        throw new Error("file does not look like a Recoil Trainer pattern");
+        throw new Error("file does not look like a Recoil Pattern Recorder pattern");
       }
       const filename = await api.savePattern(parsed);
       await refreshList();
@@ -145,7 +145,7 @@ export default function App() {
       <aside className="sidebar">
         <div className="sidebar-header">
           <div className="row" style={{ justifyContent: "space-between" }}>
-            <h1>Recoil Trainer</h1>
+            <h1>Recoil Pattern Recorder</h1>
             <div className="row" style={{ gap: 4 }}>
               <button
                 onClick={() => importInputRef.current?.click()}
